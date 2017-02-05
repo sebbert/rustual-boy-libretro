@@ -97,4 +97,9 @@ pub unsafe extern fn retro_init() {
 }
 
 #[no_mangle]
+pub unsafe extern fn retro_deinit() {
+	
+}
+
+#[no_mangle]
 pub extern fn retro_api_version() -> u32 { 1 }
