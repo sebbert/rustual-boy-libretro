@@ -24,6 +24,8 @@ static mut GLOBAL_CALLBACKS: Callbacks = Callbacks {
 	input_state_fn: None
 };
 
+static mut GLOBAL_CONTEXT: Option<Context> = None;
+
 // libretro API
 // ------------
 
