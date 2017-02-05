@@ -5,34 +5,14 @@ extern crate log;
 extern crate libc;
 use libc::{ c_void, c_char, size_t };
 
+mod system_info;
+use system_info::SystemInfo;
+
 mod callbacks;
 use callbacks::*;
 
-macro_rules! cstring {
-    ($ex:expr) => {{
-        (concat!($ex, "\0")).as_ptr() as *const c_char
-    }}
-}
-
-impl SystemInfo {
-	pub fn new() -> SystemInfo {
-		SystemInfo {
-			library_name: cstring!("Rustual Boy"),
-			library_version: cstring!(env!("CARGO_PKG_VERSION")),
-			valid_extensions: cstring!("vb")
-		}
-	}
-}
-
 #[derive(Default)]
 pub struct Context {
-}
-
-#[repr(C)]
-pub struct SystemInfo {
-    pub library_name: *const i8,
-    pub library_version: *const i8,
-    pub valid_extensions: *const i8,
 }
 
 static mut GLOBAL_CALLBACKS: Callbacks = Callbacks {
