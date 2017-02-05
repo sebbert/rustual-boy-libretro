@@ -13,6 +13,28 @@ use callbacks::*;
 
 #[derive(Default)]
 pub struct Context {
+	av_info: SystemAvInfo
+}
+
+#[repr(C)]
+pub struct SystemGameGeometry {
+	base_width: u32,
+	base_height: u32,
+	max_width: u32,
+	max_height: u32,
+	aspect_ratio: f32 
+}
+
+#[repr(C)]
+pub struct SystemTiming {
+	fps: f64,
+	sample_rate: f64
+}
+
+#[repr(C)]
+pub struct SystemAvInfo {
+	geometry: SystemGameGeometry,
+	timing: SystemTiming
 }
 
 static mut GLOBAL_CALLBACKS: Callbacks = Callbacks {
@@ -64,6 +86,10 @@ pub unsafe extern fn retro_get_system_info(info: *mut SystemInfo) {
 	*info = SystemInfo::new();
 }
 
+#[no_mangle]
+pub unsafe extern fn retro_get_system_av_info(av_info: *mut SystemAvInfo) {
+	*av_info = GLOBAL_CONTEXT.unwrap().av_info;
+}
 
 #[no_mangle]
 pub unsafe extern fn retro_init() {
