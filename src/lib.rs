@@ -5,8 +5,6 @@ extern crate log;
 extern crate libc;
 use libc::{ c_void, c_char, size_t };
 
-mod libretro;
-
 mod callbacks;
 use callbacks::*;
 
@@ -28,7 +26,6 @@ impl SystemInfo {
 
 #[derive(Default)]
 pub struct Context {
-	callbacks: Callbacks
 }
 
 #[repr(C)]
@@ -38,37 +35,46 @@ pub struct SystemInfo {
     pub valid_extensions: *const i8,
 }
 
+static mut GLOBAL_CALLBACKS: Callbacks = Callbacks {
+	environment_fn: None,
+	video_refresh_fn: None,
+	audio_sample_fn: None,
+	audio_sample_batch_fn: None,
+	input_poll_fn: None,
+	input_state_fn: None
+};
+
 // libretro API
 // ------------
 
 #[no_mangle]
-pub extern fn retro_set_environment(callback: EnvironmentCallback) {
-	//TODO
+pub unsafe extern fn retro_set_environment(callback: EnvironmentCallback) {
+	GLOBAL_CALLBACKS.environment_fn = Some(callback);
 }
 
 #[no_mangle]
-pub extern fn retro_set_video_refresh(callback: VideoRefreshCallback) {
-	// TODO
+pub unsafe extern fn retro_set_video_refresh(callback: VideoRefreshCallback) {
+	GLOBAL_CALLBACKS.video_refresh_fn = Some(callback);
 }
 
 #[no_mangle]
-pub extern fn retro_set_audio_sample(callback: AudioSampleCallback) {
-	// TODO
+pub unsafe extern fn retro_set_audio_sample(callback: AudioSampleCallback) {
+	GLOBAL_CALLBACKS.audio_sample_fn = Some(callback);
 }
 
 #[no_mangle]
-pub extern fn retro_set_audio_sample_batch(callback: AudioSampleBatchCallback) {
-	// TODO
+pub unsafe extern fn retro_set_audio_sample_batch(callback: AudioSampleBatchCallback) {
+	GLOBAL_CALLBACKS.audio_sample_batch_fn = Some(callback);
 }
 
 #[no_mangle]
-pub extern fn retro_set_input_poll(callback: InputPollCallback) {
-	// TODO
+pub unsafe extern fn retro_set_input_poll(callback: InputPollCallback) {
+	GLOBAL_CALLBACKS.input_poll_fn = Some(callback);
 }
 
 #[no_mangle]
-pub extern fn retro_set_input_state(callback: InputStateCallback) {
-	// TODO
+pub unsafe extern fn retro_set_input_state(callback: InputStateCallback) {
+	GLOBAL_CALLBACKS.input_state_fn = Some(callback);
 }
 
 #[no_mangle]
