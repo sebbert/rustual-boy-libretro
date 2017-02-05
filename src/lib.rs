@@ -11,7 +11,6 @@ use system_info::SystemInfo;
 mod callbacks;
 use callbacks::*;
 
-#[derive(Default)]
 pub struct Context {
 	av_info: SystemAvInfo
 }
