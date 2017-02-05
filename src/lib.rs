@@ -17,7 +17,7 @@ macro_rules! cstring {
 impl SystemInfo {
 	pub fn new() -> SystemInfo {
 		SystemInfo {
-			library_name: cstring!("SYSTEM_INFO_LIBRARY_NAME"),
+			library_name: cstring!("Rustual Boy"),
 			library_version: cstring!(env!("CARGO_PKG_VERSION")),
 			valid_extensions: cstring!("vb")
 		}
