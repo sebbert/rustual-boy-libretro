@@ -78,6 +78,10 @@ static mut GLOBAL_CALLBACKS: Callbacks = Callbacks {
 static mut GLOBAL_CONTEXT: *mut Context = 0 as *mut _;
 
 unsafe fn get_context() -> &'static mut Context {
+	if GLOBAL_CONTEXT == (0 as *mut _) {
+		panic!("Attempted to access global context outside of game");
+	}
+
 	&mut *GLOBAL_CONTEXT
 }
 
