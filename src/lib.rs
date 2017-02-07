@@ -45,7 +45,15 @@ static mut GLOBAL_CALLBACKS: Callbacks = Callbacks {
 	input_state_fn: None
 };
 
-static mut GLOBAL_CONTEXT: Option<Context> = None;
+static mut GLOBAL_CONTEXT: *mut Context = 0 as *mut _;
+
+unsafe fn get_context() -> &'static mut Context {
+	&mut *GLOBAL_CONTEXT
+}
+
+unsafe fn set_context(context: Box<Context>) {
+	GLOBAL_CONTEXT = Box::into_raw(context);
+}
 
 // libretro API
 // ------------
