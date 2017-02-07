@@ -20,8 +20,6 @@ use system_info::SystemInfo;
 mod callbacks;
 use callbacks::*;
 
-
-
 pub struct Context {
 }
 
@@ -188,7 +186,6 @@ pub unsafe extern fn retro_get_memory_data() {
 pub unsafe extern fn retro_get_memory_size() {
 	not_implemented!("retro_get_memory_size");
 }
-
 
 #[no_mangle]
 pub unsafe extern fn retro_reset() {
