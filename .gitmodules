@@ -1,0 +1,3 @@
+[submodule "rustual-boy"]
+	path = rustual-boy
+	url = https://github.com/emu-rs/rustual-boy.git
