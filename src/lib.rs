@@ -2,8 +2,17 @@
 extern crate bitflags;
 #[macro_use]
 extern crate log;
+
 extern crate libc;
 use libc::{ c_void, c_char, size_t };
+
+extern crate rustual_boy_core;
+
+use rustual_boy_core::vip;
+use rustual_boy_core::vsu;
+use rustual_boy_core::virtual_boy::{
+	VirtualBoy
+};
 
 mod system_info;
 use system_info::SystemInfo;
@@ -11,8 +20,29 @@ use system_info::SystemInfo;
 mod callbacks;
 use callbacks::*;
 
+
+
 pub struct Context {
-	av_info: SystemAvInfo
+}
+
+impl Context {
+	pub fn system_av_info(&self) -> SystemAvInfo {
+		SystemAvInfo {
+			geometry: SystemGameGeometry {
+				base_width: vip::FRAMEBUFFER_RESOLUTION_X as u32,
+				base_height: vip::FRAMEBUFFER_RESOLUTION_Y as u32,
+				max_width: vip::FRAMEBUFFER_RESOLUTION_X as u32,
+				max_height: vip::FRAMEBUFFER_RESOLUTION_Y as u32,
+
+				// Optional
+				aspect_ratio: 0.0
+			},
+			timing: SystemTiming {
+				fps: 50.0, // TODO
+				sample_rate: vsu::SAMPLE_RATE as f64
+			}
+		}
+	}
 }
 
 #[repr(C)]
@@ -95,7 +125,7 @@ pub unsafe extern fn retro_get_system_info(info: *mut SystemInfo) {
 
 #[no_mangle]
 pub unsafe extern fn retro_get_system_av_info(av_info: *mut SystemAvInfo) {
-	*av_info = GLOBAL_CONTEXT.unwrap().av_info;
+	*av_info = get_context().system_av_info();
 }
 
 #[no_mangle]
