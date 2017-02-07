@@ -89,6 +89,12 @@ unsafe fn set_context(context: Box<Context>) {
 	GLOBAL_CONTEXT = Box::into_raw(context);
 }
 
+unsafe fn delete_context() {
+	// This frees GLOBAL_CONTEXT, since the newly created Box goes out of scope immediately
+	Box::from_raw(GLOBAL_CONTEXT);
+	GLOBAL_CONTEXT = 0 as *mut _;
+}
+
 // libretro API
 // ------------
 
