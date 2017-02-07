@@ -88,6 +88,12 @@ unsafe fn set_context(context: Box<Context>) {
 // libretro API
 // ------------
 
+macro_rules! not_implemented {
+    ( $fname:expr ) => {
+    	panic!(concat!($fname, "(): not yet implemented"));
+    }
+}
+
 #[no_mangle]
 pub unsafe extern fn retro_set_environment(callback: EnvironmentCallback) {
 	GLOBAL_CALLBACKS.environment_fn = Some(callback);
@@ -129,13 +135,84 @@ pub unsafe extern fn retro_get_system_av_info(av_info: *mut SystemAvInfo) {
 }
 
 #[no_mangle]
-pub unsafe extern fn retro_init() {
+pub unsafe extern fn retro_set_controller_port_device(port: u32, device: u32) {
+	not_implemented!("retro_set_controller_port_device");
+}
 
+#[no_mangle]
+pub unsafe extern fn retro_init() {
+	not_implemented!("retro_init");
 }
 
 #[no_mangle]
 pub unsafe extern fn retro_deinit() {
-	
+	not_implemented!("retro_deinit");
+}
+
+#[no_mangle]
+pub unsafe extern fn retro_load_game() {
+	not_implemented!("retro_load_game");
+}
+
+#[no_mangle]
+pub unsafe extern fn retro_load_game_special() {
+	not_implemented!("retro_load_game_special");
+}
+
+#[no_mangle]
+pub unsafe extern fn retro_unload_game() {
+	not_implemented!("retro_unload_game");
+}
+
+#[no_mangle]
+pub unsafe extern fn retro_get_region() {
+	not_implemented!("retro_get_region");
+}
+
+#[no_mangle]
+pub unsafe extern fn retro_get_memory_data() {
+	not_implemented!("retro_get_memory_data");
+}
+
+#[no_mangle]
+pub unsafe extern fn retro_get_memory_size() {
+	not_implemented!("retro_get_memory_size");
+}
+
+
+#[no_mangle]
+pub unsafe extern fn retro_reset() {
+	not_implemented!("retro_reset");
+}
+
+#[no_mangle]
+pub unsafe extern fn retro_run() {
+	not_implemented!("retro_run");
+}
+
+#[no_mangle]
+pub unsafe extern fn retro_serialize_size() {
+	not_implemented!("retro_serialize_size");
+}
+
+#[no_mangle]
+pub unsafe extern fn retro_serialize() {
+	not_implemented!("retro_serialize");
+}
+
+#[no_mangle]
+pub unsafe extern fn retro_unserialize() {
+	not_implemented!("retro_unserialize");
+}
+
+#[no_mangle]
+pub unsafe extern fn retro_cheat_reset() {
+	not_implemented!("retro_cheat_reset");
+}
+
+#[no_mangle]
+pub unsafe extern fn retro_cheat_set() {
+	not_implemented!("retro_cheat_set");
 }
 
 #[no_mangle]
