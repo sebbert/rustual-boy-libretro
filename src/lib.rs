@@ -29,8 +29,12 @@ static mut GLOBAL_CALLBACKS: Callbacks = Callbacks {
 
 static mut GLOBAL_CONTEXT: *mut Context = 0 as *mut _;
 
+fn has_context() -> bool {
+	GLOBAL_CONTEXT != (0 as *mut _)
+}
+
 unsafe fn get_context() -> &'static mut Context {
-	if GLOBAL_CONTEXT == (0 as *mut _) {
+	if !has_context() {
 		panic!("Attempted to access global context outside of game");
 	}
 
@@ -38,10 +42,18 @@ unsafe fn get_context() -> &'static mut Context {
 }
 
 unsafe fn set_context(context: Box<Context>) {
+	if has_context() {
+		panic!("Attempted to set global context when one already exists");
+	}
+
 	GLOBAL_CONTEXT = Box::into_raw(context);
 }
 
 unsafe fn delete_context() {
+	if !has_context() {
+		panic!("Attempted to delete non-existent context");
+	}
+
 	// This frees GLOBAL_CONTEXT, since the newly created Box goes out of scope immediately
 	Box::from_raw(GLOBAL_CONTEXT);
 	GLOBAL_CONTEXT = 0 as *mut _;
