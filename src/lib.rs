@@ -17,6 +17,13 @@ use rustual_boy_core::virtual_boy::{
 mod system_info;
 use system_info::SystemInfo;
 
+mod system_av_info;
+use system_av_info::{
+	SystemAvInfo,
+	SystemGameGeometry,
+	SystemTiming
+};
+
 mod callbacks;
 use callbacks::*;
 
@@ -41,27 +48,6 @@ impl Context {
 			}
 		}
 	}
-}
-
-#[repr(C)]
-pub struct SystemGameGeometry {
-	base_width: u32,
-	base_height: u32,
-	max_width: u32,
-	max_height: u32,
-	aspect_ratio: f32 
-}
-
-#[repr(C)]
-pub struct SystemTiming {
-	fps: f64,
-	sample_rate: f64
-}
-
-#[repr(C)]
-pub struct SystemAvInfo {
-	geometry: SystemGameGeometry,
-	timing: SystemTiming
 }
 
 static mut GLOBAL_CALLBACKS: Callbacks = Callbacks {
