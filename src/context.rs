@@ -1,5 +1,7 @@
 extern crate rustual_boy_core;
 use self::rustual_boy_core::{ vip, vsu };
+use self::rustual_boy_core::virtual_boy::VirtualBoy;
+
 
 use system_av_info::{
 	SystemAvInfo,
@@ -7,9 +9,17 @@ use system_av_info::{
 	SystemTiming
 };
 
-pub struct Context {}
+pub struct Context {
+	virtual_boy: VirtualBoy
+}
 
 impl Context {
+	pub fn new(vb: VirtualBoy) -> Context {
+		Context {
+			virtual_boy: vb
+		}
+	}
+
 	pub fn system_av_info(&self) -> SystemAvInfo {
 		SystemAvInfo {
 			geometry: SystemGameGeometry {
