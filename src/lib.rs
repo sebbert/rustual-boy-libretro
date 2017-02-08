@@ -30,7 +30,7 @@ static mut GLOBAL_CALLBACKS: Callbacks = Callbacks {
 static mut GLOBAL_CONTEXT: *mut Context = 0 as *mut _;
 
 unsafe fn has_context() -> bool {
-	GLOBAL_CONTEXT != (0 as *mut _)
+	!GLOBAL_CONTEXT.is_null()
 }
 
 unsafe fn get_context() -> &'static mut Context {
