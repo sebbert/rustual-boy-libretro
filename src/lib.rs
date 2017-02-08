@@ -126,7 +126,7 @@ pub unsafe extern fn retro_load_game() {
 
 #[no_mangle]
 pub unsafe extern fn retro_load_game_special() {
-	not_implemented!("retro_load_game_special");
+	// Neither required nor recommended
 }
 
 #[no_mangle]
