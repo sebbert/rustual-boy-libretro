@@ -135,17 +135,17 @@ pub unsafe extern fn retro_unload_game() {
 }
 
 #[no_mangle]
-pub unsafe extern fn retro_get_region() {
+pub unsafe extern fn retro_get_region() -> u32 {
 	not_implemented!("retro_get_region");
 }
 
 #[no_mangle]
-pub unsafe extern fn retro_get_memory_data() {
+pub unsafe extern fn retro_get_memory_data(id: u32) -> *mut c_void {
 	not_implemented!("retro_get_memory_data");
 }
 
 #[no_mangle]
-pub unsafe extern fn retro_get_memory_size() {
+pub unsafe extern fn retro_get_memory_size(id: u32) -> size_t {
 	not_implemented!("retro_get_memory_size");
 }
 
@@ -160,17 +160,17 @@ pub unsafe extern fn retro_run() {
 }
 
 #[no_mangle]
-pub unsafe extern fn retro_serialize_size() {
+pub unsafe extern fn retro_serialize_size() -> size_t {
 	not_implemented!("retro_serialize_size");
 }
 
 #[no_mangle]
-pub unsafe extern fn retro_serialize() {
+pub unsafe extern fn retro_serialize(data: *mut c_void, size: size_t) -> bool {
 	not_implemented!("retro_serialize");
 }
 
 #[no_mangle]
-pub unsafe extern fn retro_unserialize() {
+pub unsafe extern fn retro_unserialize(data: *const c_void, size: size_t) -> bool {
 	not_implemented!("retro_unserialize");
 }
 
@@ -180,7 +180,7 @@ pub unsafe extern fn retro_cheat_reset() {
 }
 
 #[no_mangle]
-pub unsafe extern fn retro_cheat_set() {
+pub unsafe extern fn retro_cheat_set(index: u32, enabled: bool, code: *const c_char) {
 	not_implemented!("retro_cheat_set");
 }
 
