@@ -9,9 +9,9 @@ macro_rules! cstring {
 
 #[repr(C)]
 pub struct SystemInfo {
-    pub library_name: *const i8,
-    pub library_version: *const i8,
-    pub valid_extensions: *const i8,
+    pub library_name: *const c_char,
+    pub library_version: *const c_char,
+    pub valid_extensions: *const c_char,
     pub need_fullpath: bool,
     pub block_extract: bool
 }
