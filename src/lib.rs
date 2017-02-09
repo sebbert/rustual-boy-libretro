@@ -125,8 +125,9 @@ pub unsafe extern fn retro_load_game() {
 }
 
 #[no_mangle]
-pub unsafe extern fn retro_load_game_special() {
+pub unsafe extern fn retro_load_game_special(game_type: u32, game_infos: *const GameInfo, num_game_infos: size_t) -> bool {
 	// Neither required nor recommended
+	false
 }
 
 #[no_mangle]
