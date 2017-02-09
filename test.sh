@@ -8,5 +8,12 @@
 cd "$(dirname "$0")"
 HERE=`pwd`
 
+case "$OSTYPE" in
+	darwin*) CORE_FILENAME='librustual_boy_libretro.dylib' ;;
+	 linux*) CORE_FILENAME='librustual_boy_libretro.so' ;;
+	  msys*) echo "Error: Retroarch CLI doesn't work in msys, run test.bat from cmd.exe"; exit 1 ;;
+	      *) echo "Error: Unsupported OS"; exit 1 ;; 
+esac
+
 cargo build --release
-retroarch -vL "$HERE/target/release/librustual_boy_libretro.dylib" $@
+retroarch --vL "$HERE/target/release/$CORE_FILENAME" $@
