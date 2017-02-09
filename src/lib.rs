@@ -6,6 +6,9 @@ extern crate log;
 extern crate libc;
 use libc::{ c_void, c_char, size_t };
 
+extern crate rustual_boy_core;
+use rustual_boy_core::rom::Rom;
+
 mod system_info;
 use system_info::SystemInfo;
 
@@ -17,6 +20,9 @@ use callbacks::*;
 
 mod context;
 use context::Context;
+
+mod game_info;
+use game_info::GameInfo;
 
 static mut GLOBAL_CALLBACKS: Callbacks = Callbacks {
 	environment_fn: None,
@@ -120,8 +126,20 @@ pub unsafe extern fn retro_init() {}
 pub unsafe extern fn retro_deinit() {}
 
 #[no_mangle]
-pub unsafe extern fn retro_load_game() {
-	not_implemented!("retro_load_game");
+pub unsafe extern fn retro_load_game(game_info: *const GameInfo) -> bool {
+	info!("Loading game...");
+
+	let game_info = & *game_info;
+
+	match Rom::from_bytes(game_info.data_ref()) {
+		Ok(rom) => {
+			let context = Context::with_rom(rom);
+			set_context(Box::new(context));
+
+			true
+		},
+		Err(e) => false
+	}
 }
 
 #[no_mangle]
@@ -132,7 +150,7 @@ pub unsafe extern fn retro_load_game_special(game_type: u32, game_infos: *const 
 
 #[no_mangle]
 pub unsafe extern fn retro_unload_game() {
-	not_implemented!("retro_unload_game");
+	delete_context();
 }
 
 #[no_mangle]

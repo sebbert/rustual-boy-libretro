@@ -1,6 +1,10 @@
 extern crate rustual_boy_core;
-use self::rustual_boy_core::{ vip, vsu };
-use self::rustual_boy_core::virtual_boy::VirtualBoy;
+
+use self::rustual_boy_core::{ vip, vsu, rom, sram, virtual_boy };
+
+use self::virtual_boy::VirtualBoy;
+use self::rom::Rom;
+use self::sram::Sram;
 
 
 use system_av_info::{
@@ -10,10 +14,14 @@ use system_av_info::{
 };
 
 pub struct Context {
-	virtual_boy: VirtualBoy
+	pub virtual_boy: VirtualBoy
 }
 
 impl Context {
+	pub fn with_rom(rom: Rom) -> Context {
+		Self::new(VirtualBoy::new(rom, Sram::new()))
+	}
+
 	pub fn new(vb: VirtualBoy) -> Context {
 		Context {
 			virtual_boy: vb

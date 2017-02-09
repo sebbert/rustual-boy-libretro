@@ -11,3 +11,9 @@ pub struct GameInfo {
 	size: size_t,
 	meta: *const c_char
 }
+
+impl GameInfo {
+	pub unsafe fn data_ref(&self) -> &[u8] {
+		slice::from_raw_parts(self.data as *const u8, self.size)
+	}
+}
