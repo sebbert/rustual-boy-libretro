@@ -162,7 +162,7 @@ pub unsafe extern fn retro_run() {
 
 #[no_mangle]
 pub unsafe extern fn retro_serialize_size() -> size_t {
-	not_implemented!("retro_serialize_size");
+	0
 }
 
 #[no_mangle]
