@@ -41,7 +41,7 @@ unsafe fn has_context() -> bool {
 
 unsafe fn get_context() -> &'static mut Context {
 	if !has_context() {
-		panic!("Attempted to access global context outside of game");
+		panic!("Attempted to access nonexistent global context");
 	}
 
 	&mut *GLOBAL_CONTEXT
