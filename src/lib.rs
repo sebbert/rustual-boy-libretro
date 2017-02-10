@@ -3,6 +3,8 @@ extern crate bitflags;
 #[macro_use]
 extern crate log;
 
+use std::ptr;
+
 extern crate libc;
 use libc::{ c_void, c_char, size_t };
 
@@ -155,17 +157,17 @@ pub unsafe extern fn retro_unload_game() {
 
 #[no_mangle]
 pub unsafe extern fn retro_get_region() -> u32 {
-	not_implemented!("retro_get_region");
+	0
 }
 
 #[no_mangle]
 pub unsafe extern fn retro_get_memory_data(id: u32) -> *mut c_void {
-	not_implemented!("retro_get_memory_data");
+	ptr::null_mut()
 }
 
 #[no_mangle]
 pub unsafe extern fn retro_get_memory_size(id: u32) -> size_t {
-	not_implemented!("retro_get_memory_size");
+	0
 }
 
 #[no_mangle]
