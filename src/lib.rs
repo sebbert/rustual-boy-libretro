@@ -57,7 +57,7 @@ unsafe fn set_context(context: Box<Context>) {
 
 unsafe fn delete_context() {
 	if !has_context() {
-		panic!("Attempted to delete non-existent context");
+		return
 	}
 
 	// This frees GLOBAL_CONTEXT, since the newly created Box goes out of scope immediately
