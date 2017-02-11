@@ -27,6 +27,7 @@ use context::Context;
 mod game_info;
 use game_info::GameInfo;
 
+mod callback_sink;
 mod retro_time_source;
 
 static mut GLOBAL_CALLBACKS: Callbacks = Callbacks {
