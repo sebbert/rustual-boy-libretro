@@ -62,9 +62,9 @@ impl Context {
 
 		// TODO: Record initial time and take difference
 		let target_emulated_time_ns = self.time_source.time_ns();
-		let target_emulated_cycles_ns = target_emulated_time_ns / 50;
+		let target_emulated_cycles = target_emulated_time_ns / 50;
 
-		while self.emulated_cycles < target_emulated_cycles_ns {
+		while self.emulated_cycles < target_emulated_cycles {
 			let (num_cycles, _) = self.virtual_boy.step(video_frame_sink, audio_frame_sink);
 
 			self.emulated_cycles += num_cycles as _;
