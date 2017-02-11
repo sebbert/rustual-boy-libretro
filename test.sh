@@ -16,4 +16,7 @@ case "$OSTYPE" in
 esac
 
 cargo build --release
-retroarch --verbose -L "$HERE/target/release/$CORE_FILENAME" $@
+
+if [[ $? -eq 0 ]]; then
+	retroarch --verbose -L "$HERE/target/release/$CORE_FILENAME" $@
+fi
