@@ -8,20 +8,29 @@ use rustual_boy_core::time_source::TimeSource;
 use rustual_boy_core::audio_frame_sink::AudioFrameSink;
 use rustual_boy_core::video_frame_sink::VideoFrameSink;
 
+use retro_time_source::RetroTimeSource;
+use callbacks::Callbacks;
+use callback_sink::CallbackSink;
 use system_av_info::{
 	SystemAvInfo,
 	SystemGameGeometry,
 	SystemTiming
 };
 
+use std::borrow::BorrowMut;
+
 pub struct Context {
 	virtual_boy: VirtualBoy,
+	emulated_cycles: u64,
+	time_source: Box<RetroTimeSource>
 }
 
 impl Context {
 	pub fn new(rom: Rom, sram: Sram) -> Context {
 		Context {
 			virtual_boy: VirtualBoy::new(rom, sram),
+			emulated_cycles: 0,
+			time_source: Box::new(RetroTimeSource::new())
 		}
 	}
 
@@ -40,6 +49,25 @@ impl Context {
 				fps: 50.0,
 				sample_rate: vsu::SAMPLE_RATE as f64
 			}
+		}
+	}
+
+	pub fn time_source_mut(&mut self) -> &mut RetroTimeSource {
+		self.time_source.borrow_mut()
+	}
+
+	pub fn run_frame(&mut self, callbacks: &'static Callbacks) {
+		let mut audio_frame_sink = &mut CallbackSink(callbacks) as &mut AudioFrameSink;
+		let mut video_frame_sink = &mut CallbackSink(callbacks) as &mut VideoFrameSink;
+
+		// TODO: Record initial time and take difference
+		let target_emulated_time_ns = self.time_source.time_ns();
+		let target_emulated_cycles_ns = target_emulated_time_ns / 50;
+
+		while self.emulated_cycles < target_emulated_cycles_ns {
+			let (num_cycles, _) = self.virtual_boy.step(video_frame_sink, audio_frame_sink);
+
+			self.emulated_cycles += num_cycles as _;
 		}
 	}
 }

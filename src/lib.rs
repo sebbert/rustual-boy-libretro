@@ -11,6 +11,8 @@ use libc::{ c_void, c_char, size_t };
 extern crate rustual_boy_core;
 use rustual_boy_core::rom::Rom;
 use rustual_boy_core::sram::Sram;
+use rustual_boy_core::audio_frame_sink::AudioFrameSink;
+use rustual_boy_core::video_frame_sink::VideoFrameSink;
 
 mod system_info;
 use system_info::SystemInfo;
@@ -28,9 +30,15 @@ mod game_info;
 use game_info::GameInfo;
 
 mod callback_sink;
-mod retro_time_source;
-mod environment;
+use callback_sink::CallbackSink;
 
+mod retro_time_source;
+use retro_time_source::RetroTimeSource;
+
+mod environment;
+use environment::FrameTimeCallback;
+
+mod logger;
 
 static mut GLOBAL_CALLBACKS: Callbacks = Callbacks {
 	environment_fn: None,
@@ -75,6 +83,12 @@ unsafe fn delete_context() {
 	// This frees GLOBAL_CONTEXT, since the newly created Box goes out of scope immediately
 	Box::from_raw(GLOBAL_CONTEXT);
 	GLOBAL_CONTEXT = 0 as *mut _;
+}
+
+extern fn retro_frame_time_callback(time_usec: i64) {
+	unsafe {
+		get_context().time_source_mut().append(time_usec as u64);
+	}
 }
 
 // libretro API
@@ -134,6 +148,11 @@ pub unsafe extern fn retro_set_controller_port_device(port: u32, device: u32) {
 #[no_mangle]
 pub unsafe extern fn retro_init() {
 	logger::init();
+
+	get_callbacks().set_frame_time_callback(FrameTimeCallback {
+		callback: retro_frame_time_callback,
+		reference: 50
+	});
 }
 
 #[no_mangle]
@@ -189,7 +208,9 @@ pub unsafe extern fn retro_reset() {
 
 #[no_mangle]
 pub unsafe extern fn retro_run() {
-	not_implemented!("retro_run");
+	get_callbacks().input_poll();
+
+	get_context().run_frame(get_callbacks());
 }
 
 #[no_mangle]
