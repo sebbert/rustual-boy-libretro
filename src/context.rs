@@ -17,12 +17,10 @@ use system_av_info::{
 	SystemTiming
 };
 
-use std::borrow::BorrowMut;
-
 pub struct Context {
 	virtual_boy: VirtualBoy,
 	emulated_cycles: u64,
-	time_source: Box<RetroTimeSource>
+	time_source: RetroTimeSource
 }
 
 impl Context {
@@ -30,7 +28,7 @@ impl Context {
 		Context {
 			virtual_boy: VirtualBoy::new(rom, sram),
 			emulated_cycles: 0,
-			time_source: Box::new(RetroTimeSource::new())
+			time_source: RetroTimeSource::new()
 		}
 	}
 
@@ -53,7 +51,7 @@ impl Context {
 	}
 
 	pub fn time_source_mut(&mut self) -> &mut RetroTimeSource {
-		self.time_source.borrow_mut()
+		&mut self.time_source
 	}
 
 	pub fn run_frame(&mut self, callbacks: &'static Callbacks) {
