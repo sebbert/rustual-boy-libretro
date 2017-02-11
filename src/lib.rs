@@ -27,6 +27,8 @@ use context::Context;
 mod game_info;
 use game_info::GameInfo;
 
+mod retro_time_source;
+
 static mut GLOBAL_CALLBACKS: Callbacks = Callbacks {
 	environment_fn: None,
 	video_refresh_fn: None,
