@@ -1,11 +1,12 @@
 extern crate rustual_boy_core;
 
-use self::rustual_boy_core::{ vip, vsu, rom, sram, virtual_boy };
-
-use self::virtual_boy::VirtualBoy;
-use self::rom::Rom;
-use self::sram::Sram;
-
+use rustual_boy_core::{ vip, vsu };
+use rustual_boy_core::virtual_boy::VirtualBoy;
+use rustual_boy_core::rom::Rom;
+use rustual_boy_core::sram::Sram;
+use rustual_boy_core::time_source::TimeSource;
+use rustual_boy_core::audio_frame_sink::AudioFrameSink;
+use rustual_boy_core::video_frame_sink::VideoFrameSink;
 
 use system_av_info::{
 	SystemAvInfo,
@@ -14,17 +15,13 @@ use system_av_info::{
 };
 
 pub struct Context {
-	pub virtual_boy: VirtualBoy
+	virtual_boy: VirtualBoy,
 }
 
 impl Context {
-	pub fn with_rom(rom: Rom) -> Context {
-		Self::new(VirtualBoy::new(rom, Sram::new()))
-	}
-
-	pub fn new(vb: VirtualBoy) -> Context {
+	pub fn new(rom: Rom, sram: Sram) -> Context {
 		Context {
-			virtual_boy: vb
+			virtual_boy: VirtualBoy::new(rom, sram),
 		}
 	}
 

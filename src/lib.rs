@@ -10,6 +10,7 @@ use libc::{ c_void, c_char, size_t };
 
 extern crate rustual_boy_core;
 use rustual_boy_core::rom::Rom;
+use rustual_boy_core::sram::Sram;
 
 mod system_info;
 use system_info::SystemInfo;
@@ -141,7 +142,7 @@ pub unsafe extern fn retro_load_game(game_info: *const GameInfo) -> bool {
 
 	match Rom::from_bytes(game_info.data_ref()) {
 		Ok(rom) => {
-			let context = Context::with_rom(rom);
+			let context = Context::new(rom, Sram::new());
 			set_context(Box::new(context));
 
 			true
