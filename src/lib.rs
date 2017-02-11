@@ -29,6 +29,8 @@ use game_info::GameInfo;
 
 mod callback_sink;
 mod retro_time_source;
+mod environment;
+
 
 static mut GLOBAL_CALLBACKS: Callbacks = Callbacks {
 	environment_fn: None,
