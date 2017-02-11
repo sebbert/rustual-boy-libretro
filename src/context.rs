@@ -5,8 +5,7 @@ use rustual_boy_core::virtual_boy::VirtualBoy;
 use rustual_boy_core::rom::Rom;
 use rustual_boy_core::sram::Sram;
 use rustual_boy_core::time_source::TimeSource;
-use rustual_boy_core::audio_frame_sink::AudioFrameSink;
-use rustual_boy_core::video_frame_sink::VideoFrameSink;
+use rustual_boy_core::sinks::{ Sink, AudioFrame, VideoFrame };
 
 use retro_time_source::RetroTimeSource;
 use callbacks::Callbacks;
@@ -55,8 +54,8 @@ impl Context {
 	}
 
 	pub fn run_frame(&mut self, callbacks: &'static Callbacks) {
-		let mut audio_frame_sink = &mut CallbackSink(callbacks) as &mut AudioFrameSink;
-		let mut video_frame_sink = &mut CallbackSink(callbacks) as &mut VideoFrameSink;
+		let mut audio_frame_sink = &mut CallbackSink(callbacks) as &mut Sink<AudioFrame>;
+		let mut video_frame_sink = &mut CallbackSink(callbacks) as &mut Sink<VideoFrame>;
 
 		// TODO: Record initial time and take difference
 		let target_emulated_time_ns = self.time_source.time_ns();

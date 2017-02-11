@@ -11,8 +11,6 @@ use libc::{ c_void, c_char, size_t };
 extern crate rustual_boy_core;
 use rustual_boy_core::rom::Rom;
 use rustual_boy_core::sram::Sram;
-use rustual_boy_core::audio_frame_sink::AudioFrameSink;
-use rustual_boy_core::video_frame_sink::VideoFrameSink;
 
 mod system_info;
 use system_info::SystemInfo;
