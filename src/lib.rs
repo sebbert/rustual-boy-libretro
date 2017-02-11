@@ -122,7 +122,9 @@ pub unsafe extern fn retro_set_controller_port_device(port: u32, device: u32) {
 }
 
 #[no_mangle]
-pub unsafe extern fn retro_init() {}
+pub unsafe extern fn retro_init() {
+	logger::init();
+}
 
 #[no_mangle]
 pub unsafe extern fn retro_deinit() {}
