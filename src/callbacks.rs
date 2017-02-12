@@ -27,10 +27,12 @@ impl Callbacks {
 		(self.video_refresh_fn.unwrap())(data, width, height, pitch)
 	}
 
+	#[allow(dead_code)]
 	pub fn audio_sample(&self, left: i16, right: i16) {
 		(self.audio_sample_fn.unwrap())(left, right);
 	}
 
+	#[allow(dead_code)]
 	pub fn audio_sample_batch(&self, data: *const i16, frames: size_t) {
 		(self.audio_sample_batch_fn.unwrap())(data, frames);
 	}

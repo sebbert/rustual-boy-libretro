@@ -28,10 +28,8 @@ mod game_info;
 use game_info::GameInfo;
 
 mod callback_sink;
-use callback_sink::CallbackSink;
 
 mod retro_time_source;
-use retro_time_source::RetroTimeSource;
 
 mod environment;
 use environment::{ FrameTimeCallback, PixelFormat };
@@ -139,6 +137,7 @@ pub unsafe extern fn retro_get_system_av_info(av_info: *mut SystemAvInfo) {
 }
 
 #[no_mangle]
+#[allow(unused_variables)]
 pub unsafe extern fn retro_set_controller_port_device(port: u32, device: u32) {
 	not_implemented!("retro_set_controller_port_device");
 }
@@ -171,11 +170,12 @@ pub unsafe extern fn retro_load_game(game_info: *const GameInfo) -> bool {
 
 			true
 		},
-		Err(e) => false
+		Err(_) => false
 	}
 }
 
 #[no_mangle]
+#[allow(unused_variables)]
 pub unsafe extern fn retro_load_game_special(game_type: u32, game_infos: *const GameInfo, num_game_infos: size_t) -> bool {
 	// Neither required nor recommended
 	false
@@ -192,11 +192,13 @@ pub unsafe extern fn retro_get_region() -> u32 {
 }
 
 #[no_mangle]
+#[allow(unused_variables)]
 pub unsafe extern fn retro_get_memory_data(id: u32) -> *mut c_void {
 	ptr::null_mut()
 }
 
 #[no_mangle]
+#[allow(unused_variables)]
 pub unsafe extern fn retro_get_memory_size(id: u32) -> size_t {
 	0
 }
@@ -219,11 +221,13 @@ pub unsafe extern fn retro_serialize_size() -> size_t {
 }
 
 #[no_mangle]
+#[allow(unused_variables)]
 pub unsafe extern fn retro_serialize(data: *mut c_void, size: size_t) -> bool {
 	not_implemented!("retro_serialize");
 }
 
 #[no_mangle]
+#[allow(unused_variables)]
 pub unsafe extern fn retro_unserialize(data: *const c_void, size: size_t) -> bool {
 	not_implemented!("retro_unserialize");
 }
@@ -234,6 +238,7 @@ pub unsafe extern fn retro_cheat_reset() {
 }
 
 #[no_mangle]
+#[allow(unused_variables)]
 pub unsafe extern fn retro_cheat_set(index: u32, enabled: bool, code: *const c_char) {
 	not_implemented!("retro_cheat_set");
 }

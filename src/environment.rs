@@ -2,8 +2,8 @@ use callbacks::Callbacks;
 
 const EXPERIMENTAL: isize = 0x10000;
 
+#[allow(dead_code)]
 pub enum EnvironmentCommand {
-	// Commands
 	SetRotation = 1,
 	GetOverscan = 2,
 	GetCanDupe = 3,

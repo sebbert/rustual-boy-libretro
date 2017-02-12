@@ -1,5 +1,5 @@
 extern crate libc;
-use libc::{c_void, size_t};
+use libc::c_void;
 
 extern crate rustual_boy_core;
 use rustual_boy_core::sinks::{

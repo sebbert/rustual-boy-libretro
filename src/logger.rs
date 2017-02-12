@@ -6,6 +6,7 @@ use std::io::{Write, stderr};
 
 struct StderrLogger;
 
+#[allow(unused_must_use)]
 impl log::Log for StderrLogger {
 	fn enabled(&self, metadata: &LogMetadata) -> bool {
 		metadata.level() <= LogLevel::Debug
@@ -21,7 +22,6 @@ impl log::Log for StderrLogger {
 pub fn init() {
 	log::set_logger(|max_log_level| {
 		max_log_level.set(log::LogLevelFilter::max());
-
 		Box::new(StderrLogger)
-	});
+	}).expect("Unable to register logger");
 }
