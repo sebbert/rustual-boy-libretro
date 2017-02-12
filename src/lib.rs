@@ -12,6 +12,8 @@ extern crate rustual_boy_core;
 use rustual_boy_core::rom::Rom;
 use rustual_boy_core::sram::Sram;
 
+extern crate rustual_boy_middleware;
+
 mod system_info;
 use system_info::SystemInfo;
 
