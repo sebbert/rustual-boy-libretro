@@ -54,6 +54,11 @@ pub struct FrameTimeCallback
 	pub reference: i64
 }
 
+pub enum PixelFormat {
+	// Only supported pixel format for now
+	Xrgb8888 = 1
+}
+
 impl Callbacks {
 	pub fn set_frame_time_callback(&self, frame_time_callback: FrameTimeCallback) {
 		let ptr = Box::into_raw(Box::new(frame_time_callback));
@@ -62,5 +67,11 @@ impl Callbacks {
 		unsafe {
 			Box::from_raw(ptr);
 		}
+	}
+
+	pub fn set_pixel_format(&self, format: PixelFormat) {
+		let format_ptr = Box::into_raw(Box::new(format));
+		self.environment(EnvironmentCommand::SetPixelFormat as u32, format_ptr as *mut _);
+		unsafe { Box::from_raw(format_ptr); }
 	}
 }

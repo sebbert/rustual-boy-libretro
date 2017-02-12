@@ -34,7 +34,7 @@ mod retro_time_source;
 use retro_time_source::RetroTimeSource;
 
 mod environment;
-use environment::FrameTimeCallback;
+use environment::{ FrameTimeCallback, PixelFormat };
 
 mod logger;
 
@@ -159,6 +159,8 @@ pub unsafe extern fn retro_deinit() {}
 #[no_mangle]
 pub unsafe extern fn retro_load_game(game_info: *const GameInfo) -> bool {
 	info!("Loading game...");
+
+	get_callbacks().set_pixel_format(PixelFormat::Xrgb8888);
 
 	let game_info = & *game_info;
 
