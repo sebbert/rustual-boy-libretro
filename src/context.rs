@@ -86,7 +86,7 @@ impl Context {
 				Color::from((0, 255, 255))
 			);
 
-			let frame = most_recent_sink.into_inner();
+			let frame = most_recent_sink.into_inner().unwrap();
 			anaglyphizer.append(frame);
 		}
 	}
