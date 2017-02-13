@@ -86,9 +86,8 @@ impl Context {
 				Color::from((0, 255, 255))
 			);
 
-			let top_sink = &mut anaglyphizer as &mut Sink<VideoFrame>;
-
-			top_sink.append(most_recent_sink.into_inner().unwrap())
+			let frame = most_recent_sink.into_inner();
+			anaglyphizer.append(frame);
 		}
 	}
 }
