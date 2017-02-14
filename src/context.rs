@@ -86,7 +86,7 @@ impl Context {
 
 			let mut anaglyphizer = Anaglyphizer::new(
 				gamma_adjust,
-				Color::from((255, 0, 100)),
+				Color::from((255, 0, 0)),
 				Color::from((0, 255, 255))
 			);
 
