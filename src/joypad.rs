@@ -31,11 +31,6 @@ pub enum RetroDeviceType
 
 pub fn update(callbacks: &'static Callbacks, game_pad: &mut GamePad, joypad_button: JoypadButton, rb_button: Button) {
 	let state = callbacks.input_state(0, RetroDeviceType::Joypad as u32, 0, joypad_button as u32);
-
-	if state != 0 {
-		debug!("{}", state);
-	}
-
 	game_pad.set_button_pressed(rb_button, state > 0);
 }
 
