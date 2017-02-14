@@ -14,6 +14,8 @@ use rustual_boy_core::sram::Sram;
 
 extern crate rustual_boy_middleware;
 
+mod joypad;
+
 mod system_info;
 use system_info::SystemInfo;
 
@@ -212,8 +214,6 @@ pub unsafe extern fn retro_reset() {
 
 #[no_mangle]
 pub unsafe extern fn retro_run() {
-	get_callbacks().input_poll();
-
 	get_context().run_frame(get_callbacks());
 }
 
