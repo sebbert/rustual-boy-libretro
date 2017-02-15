@@ -2,7 +2,7 @@ extern crate rustual_boy_core;
 use rustual_boy_core::game_pad::{ Button, GamePad };
 
 use callbacks::Callbacks;
-use input::JoypadButton;
+use input::{ JoypadButton, AnalogStick };
 
 pub fn map_input(callbacks: &'static Callbacks, game_pad: &mut GamePad) {
 	game_pad.set_button_pressed(Button::A,              callbacks.joypad_button(JoypadButton::A));
@@ -12,13 +12,19 @@ pub fn map_input(callbacks: &'static Callbacks, game_pad: &mut GamePad) {
 	game_pad.set_button_pressed(Button::Start,          callbacks.joypad_button(JoypadButton::Start));
 	game_pad.set_button_pressed(Button::Select,         callbacks.joypad_button(JoypadButton::Select));
 
-	game_pad.set_button_pressed(Button::LeftDPadLeft,   callbacks.joypad_button(JoypadButton::Left));
-	game_pad.set_button_pressed(Button::LeftDPadRight,  callbacks.joypad_button(JoypadButton::Right));
-	game_pad.set_button_pressed(Button::LeftDPadUp,     callbacks.joypad_button(JoypadButton::Up));
-	game_pad.set_button_pressed(Button::LeftDPadDown,   callbacks.joypad_button(JoypadButton::Down));
+	let analog_threshold = (0x7fff as i16) / 2;
 
-	game_pad.set_button_pressed(Button::RightDPadLeft,  callbacks.joypad_button(JoypadButton::R2));
-	game_pad.set_button_pressed(Button::RightDPadRight, callbacks.joypad_button(JoypadButton::R3));
-	game_pad.set_button_pressed(Button::RightDPadUp,    callbacks.joypad_button(JoypadButton::L2));
-	game_pad.set_button_pressed(Button::RightDPadDown,  callbacks.joypad_button(JoypadButton::L3));
+	let (left_x, left_y) = callbacks.analog_xy(AnalogStick::Left);
+	game_pad.set_button_pressed(Button::LeftDPadLeft,   left_x < -analog_threshold);
+	game_pad.set_button_pressed(Button::LeftDPadRight,  left_x > analog_threshold);
+	game_pad.set_button_pressed(Button::LeftDPadUp,     left_y < -analog_threshold);
+	game_pad.set_button_pressed(Button::LeftDPadDown,   left_y > analog_threshold);
+
+	let (right_x, right_y) = callbacks.analog_xy(AnalogStick::Right);
+	game_pad.set_button_pressed(Button::RightDPadLeft,  right_x < -analog_threshold);
+	game_pad.set_button_pressed(Button::RightDPadRight, right_x > analog_threshold);
+	game_pad.set_button_pressed(Button::RightDPadUp,    right_y < -analog_threshold);
+	game_pad.set_button_pressed(Button::RightDPadDown,  right_y > analog_threshold);
+
+
 }
