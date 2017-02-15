@@ -145,7 +145,7 @@ pub unsafe extern fn retro_get_system_av_info(av_info: *mut SystemAvInfo) {
 #[no_mangle]
 #[allow(unused_variables)]
 pub unsafe extern fn retro_set_controller_port_device(port: u32, device: u32) {
-	not_implemented!("retro_set_controller_port_device");
+	
 }
 
 #[no_mangle]
