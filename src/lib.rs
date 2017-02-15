@@ -140,6 +140,8 @@ pub unsafe extern fn retro_get_system_info(info: *mut SystemInfo) {
 #[no_mangle]
 pub unsafe extern fn retro_get_system_av_info(av_info: *mut SystemAvInfo) {
 	*av_info = get_context().system_av_info();
+
+	get_callbacks().set_pixel_format(PixelFormat::Xrgb8888);
 }
 
 #[no_mangle]
