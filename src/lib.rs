@@ -14,7 +14,9 @@ use rustual_boy_core::sram::Sram;
 
 extern crate rustual_boy_middleware;
 
-mod joypad;
+mod input;
+
+mod input_mapping;
 
 mod system_info;
 use system_info::SystemInfo;
