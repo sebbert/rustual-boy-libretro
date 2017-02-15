@@ -7,12 +7,12 @@ use input::{ JoypadButton, AnalogStick };
 const ANALOG_THRESHOLD: i16 = 0x7fff / 2;
 
 pub fn map_input(callbacks: &'static Callbacks, game_pad: &mut GamePad) {
-	game_pad.set_button_pressed(Button::A,              callbacks.joypad_button(JoypadButton::A));
-	game_pad.set_button_pressed(Button::B,              callbacks.joypad_button(JoypadButton::B));
-	game_pad.set_button_pressed(Button::L,              callbacks.joypad_button(JoypadButton::L));
-	game_pad.set_button_pressed(Button::R,              callbacks.joypad_button(JoypadButton::R));
-	game_pad.set_button_pressed(Button::Start,          callbacks.joypad_button(JoypadButton::Start));
-	game_pad.set_button_pressed(Button::Select,         callbacks.joypad_button(JoypadButton::Select));
+	game_pad.set_button_pressed(Button::A, callbacks.joypad_button(JoypadButton::A));
+	game_pad.set_button_pressed(Button::B, callbacks.joypad_button(JoypadButton::B));
+	game_pad.set_button_pressed(Button::L, callbacks.joypad_button(JoypadButton::L));
+	game_pad.set_button_pressed(Button::R, callbacks.joypad_button(JoypadButton::R));
+	game_pad.set_button_pressed(Button::Start, callbacks.joypad_button(JoypadButton::Start));
+	game_pad.set_button_pressed(Button::Select, callbacks.joypad_button(JoypadButton::Select));
 
 	let joypad_left_pressed = callbacks.joypad_button(JoypadButton::Left);
 	let joypad_right_pressed = callbacks.joypad_button(JoypadButton::Right);
@@ -20,7 +20,6 @@ pub fn map_input(callbacks: &'static Callbacks, game_pad: &mut GamePad) {
 	let joypad_down_pressed = callbacks.joypad_button(JoypadButton::Down);
 
 	let (left_x, left_y) = callbacks.analog_xy(AnalogStick::Left);
-
 	let left_analog_left_pressed  = left_x < -ANALOG_THRESHOLD;
 	let left_analog_right_pressed = left_x > ANALOG_THRESHOLD;
 	let left_analog_up_pressed    = left_y < -ANALOG_THRESHOLD;
