@@ -15,7 +15,7 @@ use rustual_boy_middleware::{
 	MostRecentSink
 };
 
-use joypad;
+use input_mapping;
 use retro_time_source::RetroTimeSource;
 use callbacks::Callbacks;
 use callback_sink::CallbackSink;
@@ -64,7 +64,7 @@ impl Context {
 
 	pub fn run_frame(&mut self, callbacks: &'static Callbacks) {
 		callbacks.input_poll();
-		joypad::update_game_pad(callbacks, &mut self.virtual_boy.interconnect.game_pad);
+		input_mapping::map_input(callbacks, &mut self.virtual_boy.interconnect.game_pad);
 
 		let mut most_recent_sink: MostRecentSink<VideoFrame> = MostRecentSink::new();
 		let mut audio_output_sink = CallbackSink(callbacks);
