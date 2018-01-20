@@ -13,17 +13,17 @@ pub struct SystemInfo {
     pub library_version: *const c_char,
     pub valid_extensions: *const c_char,
     pub need_fullpath: bool,
-    pub block_extract: bool
+    pub block_extract: bool,
 }
 
 impl SystemInfo {
-	pub fn new() -> SystemInfo {
-		SystemInfo {
-			library_name: cstring!("Rustual Boy"),
-			library_version: cstring!(env!("CARGO_PKG_VERSION")),
-			valid_extensions: cstring!("vb"),
-			need_fullpath: false,
-			block_extract: false
-		}
-	}
+    pub fn new() -> SystemInfo {
+        SystemInfo {
+            library_name: cstring!("Rustual Boy"),
+            library_version: cstring!(env!("CARGO_PKG_VERSION")),
+            valid_extensions: cstring!("vb"),
+            need_fullpath: false,
+            block_extract: false,
+        }
+    }
 }
