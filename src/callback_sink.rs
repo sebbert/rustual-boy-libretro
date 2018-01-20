@@ -20,7 +20,7 @@ impl Sink<ColorFrame> for CallbackSink {
         let callbacks = self.0;
 
         let output_bytes_per_pixel = size_of::<u32>();
-        let output_size_bytes = DISPLAY_PIXELS * output_bytes_per_pixel;
+        let output_size_bytes = (DISPLAY_PIXELS as usize) * output_bytes_per_pixel;
 
         let mut output: Vec<u32> = Vec::new();
         output.reserve_exact(output_size_bytes);
@@ -41,9 +41,9 @@ impl Sink<ColorFrame> for CallbackSink {
         let output_ptr = Box::into_raw(output.into_boxed_slice());
 
         callbacks.video_refresh(output_ptr as *mut c_void,
-                                DISPLAY_RESOLUTION_X as u32,
-                                DISPLAY_RESOLUTION_Y as u32,
-                                DISPLAY_RESOLUTION_X * output_bytes_per_pixel);
+                                DISPLAY_RESOLUTION_X,
+                                DISPLAY_RESOLUTION_Y,
+                                (DISPLAY_RESOLUTION_X as usize) * output_bytes_per_pixel);
 
         unsafe {
             Box::from_raw(output_ptr);
